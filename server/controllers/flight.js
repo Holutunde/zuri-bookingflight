@@ -5,7 +5,7 @@ const { v4: uuid } = require('uuid')
 const getFlights = async (req, res) => {
   try {
     const users = flights
-    res.status(200).json({ success: true, users: users })
+    res.status(200).json({ success: true, users })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -14,7 +14,7 @@ const getFlights = async (req, res) => {
 //Create new flight
 const createFlight = async (req, res) => {
   try {
-    const { title, time, price, date } = await req.body
+    const { title, time, price, date } = req.body
     const newUser = {
       id: uuid(),
       title,
@@ -36,7 +36,23 @@ const singleFlight = async (req, res) => {
   try {
     const { id } = req.params.id
     const user = flights.find((user) => user.id === id)
-    res.status(200).json({ success: 'user found', user: newFlight })
+    res.status(200).json({ success: 'user found', user })
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message })
+  }
+}
+
+//update flight
+const updateFlight = async (req, res) => {
+  try {
+    const { id } = req.params.id
+    const user = flights.find((user) => user.id === id)
+    const { title, time, price, date } = await req.body
+    user.title = title
+    user.time = time
+    user.price = price
+    user.date = date
+    res.status(200).json({ success: 'user updated', user })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -45,7 +61,7 @@ const singleFlight = async (req, res) => {
 module.exports = {
   getFlights,
   createFlight,
-  // SingleFlight,
-  //   updateFlight,
+  singleFlight,
+  updateFlight,
   //   deleteFlight,
 }

@@ -1,5 +1,6 @@
 const flights = [
   {
+    id: '1',
     title: 'flight to canada',
     time: '1pm',
     price: 26000,
