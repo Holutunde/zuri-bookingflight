@@ -4,11 +4,12 @@ const router = express.Router()
 const {
   getFlights,
   createFlight,
-  getSingleFlight,
-  updateFlight,
-  deleteFlight,
+  //   getSingleFlight,
+  //   updateFlight,
+  //   deleteFlight,
 } = require('../controllers/flight')
 
 router.route('/').get(getFlights)
+router.route('/new').post(createFlight)
 
 module.exports = router

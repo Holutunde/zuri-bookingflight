@@ -10,9 +10,20 @@ const getFlights = async (req, res) => {
   }
 }
 
+//Create new flight
+const createFlight = async (req, res) => {
+  try {
+    const user = await req.body
+    const newFlight = flights.push(user)
+    res.status(201).json({ success: true, user: newFlight })
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message })
+  }
+}
+
 module.exports = {
   getFlights,
-  //   createFlight,
+  createFlight,
   //   getSingleFlight,
   //   updateFlight,
   //   deleteFlight,
