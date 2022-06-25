@@ -14,7 +14,7 @@ const getFlights = async (req, res) => {
 //Create new flight
 const createFlight = async (req, res) => {
   try {
-    const { title, time, price, date } = req.body
+    const { title, price } = await req.body
     const newUser = {
       id: uuid(),
       title,
@@ -62,7 +62,6 @@ const deleteFlight = async (req, res) => {
   try {
     const { id } = req.params
     const flightPlan = flights.filter((flight) => flight.id !== id)
-    console.log(flightPlan)
     res.status(200).json({ success: 'user deleted', flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
