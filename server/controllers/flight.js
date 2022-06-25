@@ -4,8 +4,8 @@ const { v4: uuid } = require('uuid')
 //Get all flight
 const getFlights = async (req, res) => {
   try {
-    const users = flights
-    res.status(200).json({ success: true, users })
+    const flightPlans = flights
+    res.status(200).json({ success: true, flightPlans })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -18,9 +18,9 @@ const createFlight = async (req, res) => {
     const newUser = {
       id: uuid(),
       title,
-      time,
       price,
-      date,
+      time: new Date().toLocaleTimeString(),
+      date: new Date().toLocaleDateString(),
     }
     const newFlight = flights.push(newUser)
     res
@@ -34,9 +34,10 @@ const createFlight = async (req, res) => {
 //Get single flight
 const singleFlight = async (req, res) => {
   try {
-    const { id } = req.params.id
-    const user = flights.find((user) => user.id === id)
-    res.status(200).json({ success: 'user found', user })
+    const { id } = req.params
+    const flightPlan = flights.find((user) => user.id === id)
+    // console.log(user)
+    res.status(200).json({ success: 'user found', flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -45,14 +46,24 @@ const singleFlight = async (req, res) => {
 //update flight
 const updateFlight = async (req, res) => {
   try {
-    const { id } = req.params.id
-    const user = flights.find((user) => user.id === id)
-    const { title, time, price, date } = await req.body
-    user.title = title
-    user.time = time
-    user.price = price
-    user.date = date
+    const { id } = req.params
+    const flightPlan = flights.find((user) => user.id === id)
+    const { title, price } = await req.body
+    flightPlan.title = title
+    flightPlan.price = price
     res.status(200).json({ success: 'user updated', user })
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message })
+  }
+}
+
+//delete flight
+const deleteFlight = async (req, res) => {
+  try {
+    const { id } = req.params.id
+    const flightPlan = flights.find((flight) => flight.id === id)
+    flights.splice(flights.indexOf(flightPlan), 1)
+    res.status(200).json({ success: 'user deleted', flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -63,5 +74,5 @@ module.exports = {
   createFlight,
   singleFlight,
   updateFlight,
-  //   deleteFlight,
+  deleteFlight,
 }
