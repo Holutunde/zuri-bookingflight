@@ -9,4 +9,6 @@ const {
   deleteFlight,
 } = require('../controllers/flight')
 
+router.route('/').get(getFlights)
+
 module.exports = router
