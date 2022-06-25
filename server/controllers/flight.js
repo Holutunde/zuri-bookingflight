@@ -60,9 +60,9 @@ const updateFlight = async (req, res) => {
 //delete flight
 const deleteFlight = async (req, res) => {
   try {
-    const { id } = req.params.id
-    const flightPlan = flights.find((flight) => flight.id === id)
-    flights.splice(flights.indexOf(flightPlan), 1)
+    const { id } = req.params
+    const flightPlan = flights.filter((flight) => flight.id !== id)
+    console.log(flightPlan)
     res.status(200).json({ success: 'user deleted', flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
