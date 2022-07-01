@@ -15,17 +15,17 @@ const getFlights = async (req, res) => {
 const createFlight = async (req, res) => {
   try {
     const { title, price } = await req.body
-    const newUser = {
+    const newFlight = {
       id: uuid(),
       title,
       price,
       time: new Date().toLocaleTimeString(),
       date: new Date().toLocaleDateString(),
     }
-    const newFlight = flights.push(newUser)
+    const AddFlight = flights.push(newFlight)
     res
       .status(201)
-      .json({ success: 'new flight successfully created', newFlight })
+      .json({ success: 'new flight plan successfully created', AddFlight })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -37,7 +37,9 @@ const singleFlight = async (req, res) => {
     const { id } = req.params
     const flightPlan = flights.find((user) => user.id === id)
     // console.log(user)
-    res.status(200).json({ success: 'user found', flightPlan })
+    res
+      .status(200)
+      .json({ success: `flight plan with ${id} found`, flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -51,7 +53,9 @@ const updateFlight = async (req, res) => {
     const { title, price } = await req.body
     flightPlan.title = title
     flightPlan.price = price
-    res.status(200).json({ success: 'user updated', user })
+    res
+      .status(200)
+      .json({ success: `flight plan with ${id} updated`, flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -62,7 +66,9 @@ const deleteFlight = async (req, res) => {
   try {
     const { id } = req.params
     const flightPlan = flights.filter((flight) => flight.id !== id)
-    res.status(200).json({ success: 'user deleted', flightPlan })
+    res
+      .status(200)
+      .json({ success: `flight plan with ${id} deleted`, flightPlan })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
