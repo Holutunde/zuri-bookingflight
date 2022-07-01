@@ -25,7 +25,7 @@ const createFlight = async (req, res) => {
     const AddFlight = flights.push(newFlight)
     res
       .status(201)
-      .json({ success: 'new flight plan successfully created', AddFlight })
+      .json({ success: 'new flight plane successfully created', AddFlight })
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message })
   }
@@ -65,7 +65,8 @@ const updateFlight = async (req, res) => {
 const deleteFlight = async (req, res) => {
   try {
     const { id } = req.params
-    const flightPlan = flights.filter((flight) => flight.id !== id)
+    const flightPlan = flights.find((flight) => flight.id === id)
+    flights.splice(flights.indexOf(flightPlan), 1)
     res
       .status(200)
       .json({ success: `flight plan with ${id} deleted`, flightPlan })
